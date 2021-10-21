@@ -281,6 +281,26 @@ and to
     } ]
   </code-example>
 
+
+* [Surge.sh](https://surge.sh//): edit your CI configuration to 
+[add a 200 page](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
+
+In your .gitlab-ci.yml file place a command for copying `index.html` file into new `200.html` file. The command must be inserted after building and before deploying to surge. 
+ 
+
+```job_deploy_staging:
+  stage: deploy
+  only:
+    - develop
+  script:
+    - npm i
+    - dir
+    - ./node_modules/.bin/ng build --configuration staging
+    - cp ./dist/app/index.html ./dist/app/200.html <-- inserted command
+    - npx surge --project ./dist/app --domain $DOMAIN
+  environment: staging
+```
+
 {@a mime}
 
 ### Configuring correct MIME-type for JavaScript assets
